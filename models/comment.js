@@ -3,6 +3,8 @@ module.exports = mongoose => {
     "comment",
     mongoose.Schema(
       {
+        name: String,
+        email: String,
         content: String,
       },
       { timestamps: true }

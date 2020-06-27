@@ -13,7 +13,11 @@ router.post('/comment/add', function(req, res, next) {
 
 	db.mongoose.connection.once('open', function() {
 		console.log("Connection Successful!");
-		var comment = new CommentSchema({content: req.body.content});
+		var comment = new CommentSchema({
+			name: req.body.name,
+			email: req.body.email,
+			content: req.body.content, 
+		});
 		// save model to database
 		comment.save(function(err, result) {
 			if (err) return console.error(err);
