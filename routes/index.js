@@ -9,8 +9,11 @@ router.post('/comment/add', function(req, res, next) {
 	db.mongoose.connect(db.url, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
-	});
+	}).catch(error => {
+		res.status(500).send(error);
 
+	});
+	
 	db.mongoose.connection.once('open', function() {
 		console.log("Connection Successful!");
 		var comment = new CommentSchema({
@@ -20,16 +23,12 @@ router.post('/comment/add', function(req, res, next) {
 		});
 		// save model to database
 		comment.save(function(err, result) {
-			if (err) return console.error(err);
+			if (err) return res.status(500).send(err);
 			res.status(200).send(result);
 		});
 
-	});
-});
-
-router.post('/comment/test', function(req, res, next) {
-	res.status(200).send({
-		message: "Success"
+	}).catch(error => {
+		res.status(500).send(error);
 	});
 });
 
